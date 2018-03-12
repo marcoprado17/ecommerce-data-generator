@@ -24,3 +24,12 @@ func TestNewInvalidByAusentTitle(t *testing.T) {
 	)
 	spew.Dump(*product)
 }
+
+func TestNewInvalidByAusentImage(t *testing.T) {
+	fmt.Println("--------------------")
+	product := NewInvalidByAusentImage(
+		"http://www.oi.com.br/produto/%s",
+		"http://www.oi.com.br/produto/img/%s",
+	)
+	spew.Dump(*product)
+}

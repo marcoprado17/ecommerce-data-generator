@@ -130,3 +130,10 @@ func NewInvalidByAusentTitle(link, imageLink string) *Product {
 	product.title = ""
 	return product
 }
+
+// NewInvalidByAusentImage returns a new instance of a product that doesn't have the correct image link
+func NewInvalidByAusentImage(link, imageLink string) *Product {
+	product := NewSimpleValid(link, imageLink)
+	product.imageLink = fmt.Sprintf(imageLink, utils.GetRandID(10, 10)+".jpg")
+	return product
+}
