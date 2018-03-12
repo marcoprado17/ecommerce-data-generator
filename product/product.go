@@ -19,107 +19,117 @@ type Product struct {
 }
 
 type basicProductData struct {
-	id                  string
-	title               string
-	description         string
-	link                string
-	imageLink           string
-	additionalImageLink string
-	mobileLink          string
+	ID                  *string
+	Title               *string
+	Description         *string
+	Link                *string
+	ImageLink           *string
+	AdditionalImageLink *string
+	MobileLink          *string
 }
 
 type priceAndAvailability struct {
-	availability           string
-	availabilityDate       string
-	expirationDate         string
-	price                  string
-	salePrice              string
-	salePriceEffectiveDate string
-	unitPricingMeasure     string
-	unitPricingBaseMeasure string
-	installment            string
-	loyaltyPoints          string
+	Availability           *string
+	AvailabilityDate       *string
+	ExpirationDate         *string
+	Price                  *string
+	SalePrice              *string
+	SalePriceEffectiveDate *string
+	UnitPricingMeasure     *string
+	UnitPricingBaseMeasure *string
+	Installment            *string
+	LoyaltyPoints          *string
 }
 
 type productCategory struct {
-	googleProductCategory string
-	productType           string
+	GoogleProductCategory *string
+	ProductType           *string
 }
 
 type productIdentifiers struct {
-	brand            string
-	gtin             string
-	mpn              string
-	identifierExists string
+	Brand            *string
+	Gtin             *string
+	Mpn              *string
+	IdentifierExists *string
 }
 
 type detailedProductDescription struct {
-	condition                string
-	adult                    string
-	multipack                uint
-	isBundle                 string
-	energyEfficiencyClass    string
-	minEnergyEfficiencyClass string
-	maxEnergyEfficiencyClass string
-	ageGroup                 string
-	color                    string
-	gender                   string
-	material                 string
-	pattern                  string
-	size                     string
-	sizeType                 string
-	sizeSystem               string
-	itemGroupID              string
+	Condition                *string
+	Adult                    *string
+	Multipack                *uint
+	IsBundle                 *string
+	EnergyEfficiencyClass    *string
+	MinEnergyEfficiencyClass *string
+	MaxEnergyEfficiencyClass *string
+	AgeGroup                 *string
+	Color                    *string
+	Gender                   *string
+	Material                 *string
+	Pattern                  *string
+	Size                     *string
+	SizeType                 *string
+	SizeSystem               *string
+	ItemGroupID              *string
 }
 
 type shoppingCampaignsAndOtherConfigurations struct {
-	adwordsRedirect     string
-	excludedDestination string
-	includedDestination string
-	customLabel0        string
-	promotionID         string
+	AdwordsRedirect     *string
+	ExcludedDestination *string
+	IncludedDestination *string
+	CustomLabel0        *string
+	PromotionID         *string
 }
 
 type shipping struct {
-	shipping        string
-	shippingLabel   string
-	shippingWeight  string
-	shippingLength  string
-	shippingWidth   string
-	shippingHeight  string
-	maxHandlingTime string
-	minHandlingTime string
+	Shipping        *string
+	ShippingLabel   *string
+	ShippingWeight  *string
+	ShippingLength  *string
+	ShippingWidth   *string
+	ShippingHeight  *string
+	MaxHandlingTime *string
+	MinHandlingTime *string
 }
 
 type tax struct {
-	tax         string
-	taxCategory string
+	Tax         *string
+	TaxCategory *string
 }
 
 // NewSimpleValid returns a new instance of a simple valid product
 func NewSimpleValid(link, imageLink string) *Product {
 	product := new(Product)
 
-	product.id = utils.GetRandWord(10, 10)
-	product.title = utils.GetRandPhrase(3, 7, 2, 3)
-	product.description = utils.GetRandPhrase(3, 7, 10, 20)
-	product.link = fmt.Sprintf(link, product.id)
-	product.imageLink = utils.GetImage(imageLink)
+	ID := utils.GetRandWord(10, 10)
+	product.ID = &ID
+	title := utils.GetRandPhrase(5, 7, 1, 3)
+	product.Title = &title
+	description := utils.GetRandPhrase(3, 7, 10, 20)
+	product.Description = &description
+	productLink := fmt.Sprintf(link, product.ID)
+	product.Link = &productLink
+	productImageLink := utils.GetImage(imageLink)
+	product.ImageLink = &productImageLink
 
-	product.availability, _ = utils.GetValue([]utils.ValueProbPair{
+	availability, _ := utils.GetValue([]utils.ValueProbPair{
 		utils.ValueProbPair{V: "in stock", P: 0.8},
 		utils.ValueProbPair{V: "out of stock", P: 0.2},
 	}).(string)
-	product.price = utils.GetRandPrice(1.0, 150.0, "BRL")
+	product.Availability = &availability
+	price := utils.GetRandPrice(1.0, 150.0, "BRL")
+	product.Price = &price
 
-	product.brand = utils.GetRandPhrase(3, 10, 1, 2)
-	product.gtin = utils.GetRandGtin()
+	brand := utils.GetRandPhrase(3, 10, 1, 2)
+	product.Brand = &brand
+	gtin := utils.GetRandGtin()
+	product.Gtin = &gtin
 
-	product.condition, _ = utils.GetValue([]utils.ValueProbPair{
+	condition, _ := utils.GetValue([]utils.ValueProbPair{
 		utils.ValueProbPair{V: "new", P: 0.33},
 		utils.ValueProbPair{V: "refurbished", P: 0.33},
 		utils.ValueProbPair{V: "used", P: 0.33},
 	}).(string)
+	product.Condition = &condition
 
 	return product
 }
@@ -127,13 +137,13 @@ func NewSimpleValid(link, imageLink string) *Product {
 // NewInvalidByAusentTitle returns a new instance of a product that doesn't have title
 func NewInvalidByAusentTitle(link, imageLink string) *Product {
 	product := NewSimpleValid(link, imageLink)
-	product.title = ""
+	product.Title = nil
 	return product
 }
 
 // NewInvalidByAusentImage returns a new instance of a product that doesn't have the correct image link
 func NewInvalidByAusentImage(link, imageLink string) *Product {
 	product := NewSimpleValid(link, imageLink)
-	product.imageLink = fmt.Sprintf(imageLink, utils.GetRandID(10, 10)+".jpg")
+	*product.ImageLink = fmt.Sprintf(imageLink, utils.GetRandID(10, 10)+".jpg")
 	return product
 }

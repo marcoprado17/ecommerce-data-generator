@@ -9,6 +9,9 @@ import (
 	"time"
 )
 
+const originalImgsDir = "/home/c041/go/src/github.com/marcoprado17/ecommerce-data-generator/original_images"
+const imgsDir = "/home/c041/go/src/github.com/marcoprado17/ecommerce-data-generator/imgs"
+
 const charset = "abcdefghijklmnopqrstuvwxyz" +
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
@@ -81,19 +84,19 @@ func GetRandPhrase(minWordLength, maxWordLength, nMinWords, nMaxWords int) strin
 
 // GetImage create a copy of an image in original_images folder, assign a random name and paste it in imgs folder
 func GetImage(imageLink string) string {
-	files, err := ioutil.ReadDir("../original_images")
+	files, err := ioutil.ReadDir(originalImgsDir)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	fileName := files[seededRand.Intn(len(files))].Name()
 
-	srcFile, err := os.Open("../original_images/" + fileName)
+	srcFile, err := os.Open(originalImgsDir + "/" + fileName)
 	check(err)
 	defer srcFile.Close()
 
 	newFileName := GetRandID(10, 10) + ".jpg"
-	destFile, err := os.Create("../imgs/" + newFileName)
+	destFile, err := os.Create(imgsDir + "/" + newFileName)
 	check(err)
 	defer destFile.Close()
 
