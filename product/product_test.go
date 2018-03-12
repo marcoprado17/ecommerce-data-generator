@@ -15,3 +15,12 @@ func TestNewSimpleValid(t *testing.T) {
 	)
 	spew.Dump(*product)
 }
+
+func TestNewInvalidByAusentTitle(t *testing.T) {
+	fmt.Println("--------------------")
+	product := NewInvalidByAusentTitle(
+		"http://www.oi.com.br/produto/%s",
+		"http://www.oi.com.br/produto/img/%s",
+	)
+	spew.Dump(*product)
+}

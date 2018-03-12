@@ -124,8 +124,9 @@ func NewSimpleValid(link, imageLink string) *Product {
 	return product
 }
 
-// NewInvalid returns a new instance of an invalid product
-func NewInvalid() *Product {
-	product := new(Product)
+// NewInvalidByAusentTitle returns a new instance of a product that doesn't have title
+func NewInvalidByAusentTitle(link, imageLink string) *Product {
+	product := NewSimpleValid(link, imageLink)
+	product.title = ""
 	return product
 }
