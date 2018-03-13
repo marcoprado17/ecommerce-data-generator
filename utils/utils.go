@@ -2,14 +2,12 @@ package utils
 
 import (
 	"fmt"
-	"io"
 	"io/ioutil"
 	"math/rand"
 	"os"
 	"time"
 )
 
-const originalImgsDir = "/home/c041/go/src/github.com/marcoprado17/ecommerce-data-generator/original_images"
 const imgsDir = "/home/c041/go/src/github.com/marcoprado17/ecommerce-data-generator/imgs"
 
 const charset = "abcdefghijklmnopqrstuvwxyz" +
@@ -84,29 +82,14 @@ func GetRandPhrase(minWordLength, maxWordLength, nMinWords, nMaxWords int) strin
 
 // GetImage create a copy of an image in original_images folder, assign a random name and paste it in imgs folder
 func GetImage(imageLink string) string {
-	files, err := ioutil.ReadDir(originalImgsDir)
+	files, err := ioutil.ReadDir(imgsDir)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	fileName := files[seededRand.Intn(len(files))].Name()
 
-	srcFile, err := os.Open(originalImgsDir + "/" + fileName)
-	check(err)
-	defer srcFile.Close()
-
-	newFileName := GetRandID(10, 10) + ".jpg"
-	destFile, err := os.Create(imgsDir + "/" + newFileName)
-	check(err)
-	defer destFile.Close()
-
-	_, err = io.Copy(destFile, srcFile)
-	check(err)
-
-	err = destFile.Sync()
-	check(err)
-
-	return fmt.Sprintf(imageLink, newFileName)
+	return fmt.Sprintf(imageLink, fileName)
 }
 
 // GetValue returns a value from a slice of ValueProbPairs considering the probability of each value
