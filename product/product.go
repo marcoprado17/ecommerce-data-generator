@@ -106,7 +106,7 @@ func NewSimpleValid(link, imageLink string) *Product {
 	product.Title = &title
 	description := utils.GetRandPhrase(3, 7, 10, 20)
 	product.Description = &description
-	productLink := fmt.Sprintf(link, product.ID)
+	productLink := fmt.Sprintf(link, *product.ID)
 	product.Link = &productLink
 	productImageLink := utils.GetImage(imageLink)
 	product.ImageLink = &productImageLink
