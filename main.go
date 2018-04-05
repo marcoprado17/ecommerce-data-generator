@@ -13,7 +13,7 @@ import (
 )
 
 const productURL = "https://enextmarketads-marketplace-a.herokuapp.com/seller/%s/product/"
-const imageURL = "https://enextmarketads-marketplace-a.herokuapp.com/public/imgs/%s"
+const imageURL = "https://enextmarketads-marketplace-a.herokuapp.com/imgs/%s"
 
 func main() {
 	data := make(map[string]*seller.Seller)
